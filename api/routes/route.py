@@ -14,8 +14,7 @@ def register_routes(app, mysql):
 
     # Ruta para obtener usuarios
     @api_bp.route('/users', methods=['GET'])
-    @token_required  # Aplicar el decorador para proteger esta ruta
-    def get_users(current_user):
+    def get_users():
         return jsonify(user_service.get_all_users())
     
     # Ruta para obtener usuario
@@ -29,8 +28,7 @@ def register_routes(app, mysql):
     
     # Ruta para obtener mascotas
     @api_bp.route('/pets', methods=['GET'])
-    @token_required  # Aplicar el decorador para proteger esta ruta
-    def get_pets(current_user):
+    def get_pets():
         return jsonify(pet_service.get_all_pets())
     
     # Ruta para obtener mascota por ID
@@ -86,6 +84,10 @@ def register_routes(app, mysql):
         data = request.get_json()  # Obtener los datos enviados en el cuerpo de la solicitud
         result = attention_service.create_attention(data)  # Llamamos al servicio para crear la consulta
         return jsonify(result)
+    
+    @api_bp.route('/attentionslist', methods=['GET'])
+    def get_attentions_list():
+        return jsonify(attention_service.get_all_attentions())
 
 
     app.register_blueprint(api_bp, url_prefix='/')

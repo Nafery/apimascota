@@ -4,6 +4,14 @@ class AttentionService:
     def __init__(self, mysql):
         self.mysql = mysql
 
+    def get_all_attentions(self):
+        cursor = self.mysql.connection.cursor()
+        query = "SELECT id, tipo, fecha, precio, mascota_id FROM consulta"
+        cursor.execute(query)
+        attention_data = cursor.fetchall()
+        attentions_list = [Attention(id=row[0], tipo=row[1], fecha=row[2], precio=row[3], mascota_id=row[4]).to_dict() for row in attention_data]
+        return attentions_list
+
     def get_attention_by_pet_id(self, pet_id):
         cursor = self.mysql.connection.cursor()
         query = "SELECT id, tipo, fecha, precio, mascota_id FROM consulta WHERE mascota_id = %s"
