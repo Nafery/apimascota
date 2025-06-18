@@ -1,4 +1,4 @@
-# 🛠️ Mascota Feliz API (Arquitectura en capas)
+# 🛠️ Mascota Feliz API (Para gestión de mascotas y consultas veterinarias)
 
 API RESTful para gestión de consultas, usuarios para inicio de sesión, mascotas de cada usuario.
 
@@ -15,9 +15,17 @@ apimascota/
 ├── README.md
 └── api/
     ├── db/
+    │   ├── database.py
     ├── models/
+    │   ├── attention.py
+    │   ├── pet.py
+    │   └── user.py
     ├── routes/
+    │   ├── route.py
     └── services/
+        ├── attention_service.py
+        ├── pet_service.py
+        └── user_service.py
 ```
 
 ## 🧱 Arquitectura en capas
@@ -75,18 +83,24 @@ app.config['MYSQL_DB'] = 'mascota'
 
 ### Usuarios
 
-| Método | Ruta        | Descripción                |
-| ------ | ----------- | -------------------------- |
-| GET    | `/users`    | Obtener todos los usuarios |
+| Método | Ruta              | Descripción                |
+| ------ | ----------------- | -------------------------- |
+| GET    | `/users`          | Obtener todos los usuarios |
+| POST   | `/login`          | Autenticar usuario         |
+| GET    | `/user/<user_id>` | Obtener usuario por id     |
 
 ### Consultas
 
 | Método | Ruta                            | Descripción                         |
 | ------ | ------------------------------- | ----------------------------------- |
 | GET    | `/pets/<int:pet_id>/attentions` | Obtener consultas por id de mascota |
+| POST   | `/attentions`                   | Crear una nueva consulta            |
+| GET    | `/attentionslist`               | Obtener lista de consultas          |
 
 ### Mascotas
 
-| Método | Ruta     | Descripción                |
-| ------ | -------- | -------------------------- |
-| GET    | `/pets`  | Obtener todas las mascotas |
+| Método | Ruta                       | Descripción                        |
+| ------ | -------------------------- | ---------------------------------- |
+| GET    | `/pets`                    | Obtener todas las mascotas         |
+| GET    | `/pets/<int:id>`           | Obtener mascota por id             |
+| GET    | `/user/pets/<int:user_id>` | Obtener mascota por id del cliente |
